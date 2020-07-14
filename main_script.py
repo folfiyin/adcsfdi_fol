@@ -16,16 +16,15 @@ from sklearn.model_selection import KFold
 from sklearn.preprocessing import LabelEncoder
 from sklearn.pipeline import Pipeline
 #Change Directory if needed
-os.chdir(r"C:\Users\folami\OneDrive - University of Windsor\Desktop\Intro to Machine Learning\Project\Csv\Outputs")
-path = os.getcwd()
 
-basepath = r"C:\Users\folami\OneDrive - University of Windsor\Desktop\Intro to Machine Learning\Project\Csv\Outputs"
+basepath = "./Csv/Outputs"
 li = []
 #Read the csv files 
 def readCSV(csv):
     return pd.read_csv(csv, engine = 'python')
 
 #Read through every CSV file but only use the columns that have faulty data
+print('Reading Started!')
 with os.scandir(basepath) as entries:
     for entry in entries:
         
@@ -34,8 +33,8 @@ with os.scandir(basepath) as entries:
             df = pd.read_csv(entry,usecols=[16,17,18,20,21,22])
             li.append(df)
             
-            print(entry.name)  # print the names of the files in the directory
 
+print('Reading Done!')
 #Concatenate to a datafrme and read from that dataframe
 
 from sklearn import preprocessing
@@ -50,10 +49,10 @@ for x in li:
     
 li2 = np.vstack(li2)
              
-df1 = pd.DataFrame(li2,columns=['q1_faulty','q2_faulty','q3_faulty','o1_faulty','o2_faulty','o3_faulty']).to_csv(r'C:\Users\folami\OneDrive - University of Windsor\Desktop\Intro to Machine Learning\Project\test.csv', index = False, header=True)           
-df2 = pd.read_csv(r'C:\Users\folami\OneDrive - University of Windsor\Desktop\Intro to Machine Learning\Project\test.csv',chunksize=601)  
+df1 = pd.DataFrame(li2,columns=['q1_faulty','q2_faulty','q3_faulty','o1_faulty','o2_faulty','o3_faulty']).to_csv('./test.csv', index = False, header=True)           
+df2 = pd.read_csv('./test.csv',chunksize=601)  
   
-with open(r"C:\Users\folami\OneDrive - University of Windsor\Desktop\Intro to Machine Learning\Project\Csv\Inputs/adcs_fdi_inputs_625.csv", "r") as csv_file:
+with open("./Csv/Inputs/adcs_fdi_inputs_625.csv", "r") as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     scenario =[]
     simulation = []
@@ -241,7 +240,7 @@ sn.heatmap(cm, annot=True,cbar=False, xticklabels=x_axis_labels,yticklabels=y_ax
 plt.xlabel('Scenarios')
 plt.ylabel('Scenarios')
 # plt.show()
-plt.savefig(r'C:\Users\folami\OneDrive - University of Windsor\Desktop\Intro to Machine Learning\Project\Confusion_matrix.svg')
+plt.savefig('./Confusion_matrix.svg')
 plt.show()
 
 plt.plot(history.history['val_accuracy'])
@@ -249,7 +248,7 @@ plt.title('Model accuracy')
 plt.ylabel('Accuracy')
 plt.xlabel('Epoch')
 plt.legend(['Train', 'Test'], loc='upper left')
-plt.savefig(r'C:\Users\folami\OneDrive - University of Windsor\Desktop\Intro to Machine Learning\Project\Model_Acc.svg') 
+plt.savefig('./Model_Acc.svg') 
 plt.show()            
 
 # Plot training & validation loss values
@@ -259,7 +258,7 @@ plt.title('Model loss')
 plt.ylabel('Loss')
 plt.xlabel('Epoch')
 plt.legend(['Train', 'Test'], loc='upper right')
-plt.savefig(r'C:\Users\folami\OneDrive - University of Windsor\Desktop\Intro to Machine Learning\Project\Model_Loss.svg') 
+plt.savefig('./Model_Loss.svg') 
 plt.show()
 
 def summarize_results(score):
